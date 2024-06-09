@@ -130,6 +130,10 @@ button {
   background-color: #34c759;
 }
 
+.todo-item button.edit {
+  background-color: #ff9500;
+}
+
 /* Complete area styling */
 .complete-area {
   background-color: #e0ffe0;

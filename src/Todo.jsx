@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./Todo.css";
+import "./css/Todo.css";
+
 import { InputTodo } from "./components/InputTodo";
 import { IncompleteTodos } from "./components/IncompleteTodos";
 import { CompleteTodos } from "./components/CompleteTodos";
+import { EditTodoModal } from "./components/EditTodoModal";
 
 export const Todo = () => {
-  // state管理
   const [todoText, setTodoText] = useState("");
   const [incompleteTodos, setIncompleteTodos] = useState([]);
   const [completeTodos, setCompleteTodos] = useState([]);
-
-  /**
-   * DBレコード取得
-   */
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentTodo, setCurrentTodo] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editTodoText, setEditTodoText] = useState("");
   const fetchTodos = async () => {
     try {
       const response = await axios.get("http://localhost:8000/todos");
@@ -25,16 +26,10 @@ export const Todo = () => {
     }
   };
 
-  /**
-   * ロード時DB読込処理
-   */
   useEffect(() => {
     fetchTodos();
   }, []);
 
-  /**
-   * 追加ボタン押下処理
-   */
   const addTodo = async () => {
     if (!todoText.trim()) return;
     const newTodo = { text: todoText, completed: false };
@@ -47,9 +42,24 @@ export const Todo = () => {
     }
   };
 
-  /**
-   * 完了ボタン押下処理
-   */
+  const updateTodo = async () => {
+    if (!editTodoText.trim()) return; // 編集用のTODOテキストをチェック
+    const updatedTodo = { ...currentTodo, text: editTodoText }; // 編集用のTODOテキストを使用
+    try {
+      await axios.put(
+        `http://localhost:8000/todos/${currentTodo.id}`,
+        updatedTodo
+      );
+      setEditTodoText(""); // 編集用のTODOテキストをクリア
+      setIsEditing(false);
+      setCurrentTodo({});
+      setIsModalOpen(false);
+      fetchTodos();
+    } catch (error) {
+      console.error("Error updating todo:", error);
+    }
+  };
+
   const completeTodo = async (index) => {
     const todo = incompleteTodos[index];
     const updatedTodo = { ...todo, completed: true };
@@ -61,9 +71,6 @@ export const Todo = () => {
     }
   };
 
-  /**
-   * 削除ボタン押下処理
-   */
   const removeTodo = async (index, completed = false) => {
     const todo = completed ? completeTodos[index] : incompleteTodos[index];
     try {
@@ -74,9 +81,6 @@ export const Todo = () => {
     }
   };
 
-  /**
-   * 戻すボタン押下処理
-   */
   const backToIncomplete = async (index) => {
     const todo = completeTodos[index];
     const updatedTodo = { ...todo, completed: false };
@@ -88,7 +92,13 @@ export const Todo = () => {
     }
   };
 
-  /** TODO最大表示件数オーバー判定 */
+  const editTodo = (todo) => {
+    setEditTodoText(todo.text); // 編集用のTODOテキストをセット
+    setIsEditing(true);
+    setCurrentTodo(todo);
+    setIsModalOpen(true);
+  };
+
   const isMaxLimitIncompleteTodos = incompleteTodos.length >= 5;
 
   return (
@@ -97,8 +107,9 @@ export const Todo = () => {
       <InputTodo
         todoText={todoText}
         onChange={(e) => setTodoText(e.target.value)}
-        onClick={addTodo}
+        onClick={isEditing ? updateTodo : addTodo}
         disabled={isMaxLimitIncompleteTodos}
+        isEditing={isEditing}
       />
       {isMaxLimitIncompleteTodos && (
         <p style={{ color: "red" }}>
@@ -110,12 +121,21 @@ export const Todo = () => {
           todos={incompleteTodos}
           onClickComplete={completeTodo}
           onClickRemove={(index) => removeTodo(index, false)}
+          onClickEdit={editTodo}
         />
         <CompleteTodos
           todos={completeTodos}
           onClick={(index) => backToIncomplete(index)}
+          onClickEdit={editTodo}
         />
       </div>
+      <EditTodoModal
+        isOpen={isModalOpen}
+        todoText={editTodoText} // 編集用のTODOテキストを渡す
+        onChange={(e) => setEditTodoText(e.target.value)} // 編集用のTODOテキストを更新する関数を渡す
+        onSave={updateTodo}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };

@@ -1,7 +1,4 @@
-/**
- * TODO入力コンポーネント
- */
-const InputTodo = ({ todoText, onChange, onClick, disabled }) => (
+const InputTodo = ({ todoText, onChange, onClick, disabled, isEditing }) => (
   <div className="input-area">
     <input
       placeholder="TODOを入力"
@@ -10,7 +7,7 @@ const InputTodo = ({ todoText, onChange, onClick, disabled }) => (
       disabled={disabled}
     />
     <button onClick={onClick} disabled={disabled}>
-      追加
+      {isEditing ? "更新" : "追加"}
     </button>
   </div>
 );
