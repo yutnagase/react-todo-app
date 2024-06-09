@@ -16,7 +16,7 @@ const CompleteTodos = ({ todos, onClick, onClickEdit }) => {
 
   return (
     <div className="todo-area complete-area">
-      <p className="title">完了のTODO</p>
+      <p className="title">完了したこと</p>
       <ul>
         {todos.map((todo, index) => (
           <li key={todo.id} className="todo-item">
@@ -24,6 +24,7 @@ const CompleteTodos = ({ todos, onClick, onClickEdit }) => {
               {todo.priority}
             </span>
             <p>{todo.text}</p>
+            {todo.dueDate && <span className="due-date">{todo.dueDate}</span>}
             <button className="edit" onClick={() => onClickEdit(todo)}>
               編集
             </button>

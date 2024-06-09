@@ -41,6 +41,14 @@ button {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.apptitle {
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
 /* Header styles */
 .title {
   text-align: center;
@@ -115,14 +123,14 @@ button {
 
 .todo-item p {
   flex: 1;
-  margin: 0;
+  margin: 3px;
   font-size: 1em;
 }
 
 .priority {
   padding: 5px 10px;
   border-radius: 4px;
-  width: 100px;
+  width: 80px;
   height: 20px;
   display: flex;
   align-items: center;
@@ -176,4 +184,11 @@ button {
 
 .complete-area button {
   background-color: #ffcc00;
+}
+
+.due-date {
+  display: inline-block;
+  padding: 5px;
+  border-radius: 4px;
+  margin-left: 10px;
 }

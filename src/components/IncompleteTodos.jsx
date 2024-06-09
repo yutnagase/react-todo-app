@@ -21,7 +21,7 @@ const IncompleteTodos = ({
 
   return (
     <div className="todo-area">
-      <p className="title">未完了のTODO</p>
+      <p className="title">やること</p>
       <ul>
         {todos.map((todo, index) => (
           <li key={todo.id} className="todo-item">
@@ -29,6 +29,7 @@ const IncompleteTodos = ({
               {todo.priority}
             </span>
             <p>{todo.text}</p>
+            {todo.dueDate && <span className="due-date">{todo.dueDate}</span>}
             <button className="complete" onClick={() => onClickComplete(index)}>
               完了
             </button>

@@ -124,7 +124,7 @@ export const Todo = () => {
 
   return (
     <div className="todo-container">
-      <h1 className="title">TODOリスト</h1>
+      <h1 className="apptitle">TODOアプリ</h1>
       <InputTodo
         todoText={todoText}
         todoDueDate={todoDueDate}
