@@ -74,9 +74,10 @@ yarn start
 
 1. Open your browser and navigate to http://localhost:3000.
 2. You can add new TODO items using the input field.
-3. Mark TODO items as complete by clicking the "完了" button.
-4. Delete TODO items by clicking the "削除" button.
-5. Move completed TODO items back to incomplete by clicking the "戻す" button.
+3. Edit TODO items by clicking the "編集" button.
+4. Mark TODO items as complete by clicking the "完了" button.
+5. Delete TODO items by clicking the "削除" button.
+6. Move completed TODO items back to incomplete by clicking the "戻す" button.
 
 ## Dependencies
 
