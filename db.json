@@ -3,7 +3,7 @@
     {
       "id": "4178",
       "text": "サンプル１",
-      "completed": false,
+      "completed": true,
       "dueDate": "2024-06-10",
       "priority": "高"
     },
@@ -13,6 +13,13 @@
       "completed": false,
       "dueDate": "2024-07-01",
       "priority": "中"
+    },
+    {
+      "id": "2eba",
+      "text": "サンプル３",
+      "dueDate": "2024-06-10",
+      "priority": "低",
+      "completed": false
     }
   ]
 }

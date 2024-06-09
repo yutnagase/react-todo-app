@@ -18,7 +18,7 @@ export const Todo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTodoText, setEditTodoText] = useState("");
   const [editTodoDueDate, setEditTodoDueDate] = useState("");
-  const [editTodoPriority, setEditTodoPriority] = useState("");
+  const [editTodoPriority, setEditTodoPriority] = useState("中");
 
   const fetchTodos = async () => {
     try {
@@ -36,12 +36,12 @@ export const Todo = () => {
   }, []);
 
   const addTodo = async () => {
-    if (!todoText.trim() || !todoDueDate.trim() || !todoPriority.trim()) return;
+    if (!todoText.trim()) return;
     const newTodo = {
       text: todoText,
-      completed: false,
       dueDate: todoDueDate,
       priority: todoPriority,
+      completed: false,
     };
     try {
       await axios.post("http://localhost:8000/todos", newTodo);
@@ -55,12 +55,7 @@ export const Todo = () => {
   };
 
   const updateTodo = async () => {
-    if (
-      !editTodoText.trim() ||
-      !editTodoDueDate.trim() ||
-      !editTodoPriority.trim()
-    )
-      return;
+    if (!editTodoText.trim()) return;
     const updatedTodo = {
       ...currentTodo,
       text: editTodoText,
@@ -74,7 +69,7 @@ export const Todo = () => {
       );
       setEditTodoText("");
       setEditTodoDueDate("");
-      setEditTodoPriority("");
+      setEditTodoPriority("中");
       setIsEditing(false);
       setCurrentTodo({});
       setIsModalOpen(false);
@@ -129,7 +124,7 @@ export const Todo = () => {
 
   return (
     <div className="todo-container">
-      <p className="title">TODO List</p>
+      <h1 className="title">TODOリスト</h1>
       <InputTodo
         todoText={todoText}
         todoDueDate={todoDueDate}
@@ -142,23 +137,19 @@ export const Todo = () => {
         isEditing={isEditing}
       />
       {isMaxLimitIncompleteTodos && (
-        <p style={{ color: "red" }}>
-          最大登録数は5件です。TODOを消化してください。
-        </p>
+        <p style={{ color: "red" }}>登録できるTODOは5個までです。</p>
       )}
-      <div className="todo-list">
-        <IncompleteTodos
-          todos={incompleteTodos}
-          onClickComplete={completeTodo}
-          onClickRemove={(index) => removeTodo(index, false)}
-          onClickEdit={editTodo}
-        />
-        <CompleteTodos
-          todos={completeTodos}
-          onClick={(index) => backToIncomplete(index)}
-          onClickEdit={editTodo}
-        />
-      </div>
+      <IncompleteTodos
+        todos={incompleteTodos}
+        onClickComplete={completeTodo}
+        onClickRemove={removeTodo}
+        onClickEdit={editTodo}
+      />
+      <CompleteTodos
+        todos={completeTodos}
+        onClick={backToIncomplete}
+        onClickEdit={editTodo}
+      />
       <EditTodoModal
         isOpen={isModalOpen}
         todoText={editTodoText}
