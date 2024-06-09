@@ -9,7 +9,9 @@ const IncompleteTodos = ({
     <ul>
       {todos.map((todo, index) => (
         <li key={todo.id} className="todo-item">
-          <p>{todo.text}</p>
+          <p>
+            {todo.text} - {todo.dueDate} - {todo.priority}
+          </p>
           <button className="complete" onClick={() => onClickComplete(index)}>
             完了
           </button>

@@ -9,12 +9,17 @@ import { EditTodoModal } from "./components/EditTodoModal";
 
 export const Todo = () => {
   const [todoText, setTodoText] = useState("");
+  const [todoDueDate, setTodoDueDate] = useState("");
+  const [todoPriority, setTodoPriority] = useState("中");
   const [incompleteTodos, setIncompleteTodos] = useState([]);
   const [completeTodos, setCompleteTodos] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [currentTodo, setCurrentTodo] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editTodoText, setEditTodoText] = useState("");
+  const [editTodoDueDate, setEditTodoDueDate] = useState("");
+  const [editTodoPriority, setEditTodoPriority] = useState("");
+
   const fetchTodos = async () => {
     try {
       const response = await axios.get("http://localhost:8000/todos");
@@ -31,11 +36,18 @@ export const Todo = () => {
   }, []);
 
   const addTodo = async () => {
-    if (!todoText.trim()) return;
-    const newTodo = { text: todoText, completed: false };
+    if (!todoText.trim() || !todoDueDate.trim() || !todoPriority.trim()) return;
+    const newTodo = {
+      text: todoText,
+      completed: false,
+      dueDate: todoDueDate,
+      priority: todoPriority,
+    };
     try {
       await axios.post("http://localhost:8000/todos", newTodo);
       setTodoText("");
+      setTodoDueDate("");
+      setTodoPriority("中");
       fetchTodos();
     } catch (error) {
       console.error("Error adding todo:", error);
@@ -43,14 +55,26 @@ export const Todo = () => {
   };
 
   const updateTodo = async () => {
-    if (!editTodoText.trim()) return; // 編集用のTODOテキストをチェック
-    const updatedTodo = { ...currentTodo, text: editTodoText }; // 編集用のTODOテキストを使用
+    if (
+      !editTodoText.trim() ||
+      !editTodoDueDate.trim() ||
+      !editTodoPriority.trim()
+    )
+      return;
+    const updatedTodo = {
+      ...currentTodo,
+      text: editTodoText,
+      dueDate: editTodoDueDate,
+      priority: editTodoPriority,
+    };
     try {
       await axios.put(
         `http://localhost:8000/todos/${currentTodo.id}`,
         updatedTodo
       );
-      setEditTodoText(""); // 編集用のTODOテキストをクリア
+      setEditTodoText("");
+      setEditTodoDueDate("");
+      setEditTodoPriority("");
       setIsEditing(false);
       setCurrentTodo({});
       setIsModalOpen(false);
@@ -93,7 +117,9 @@ export const Todo = () => {
   };
 
   const editTodo = (todo) => {
-    setEditTodoText(todo.text); // 編集用のTODOテキストをセット
+    setEditTodoText(todo.text);
+    setEditTodoDueDate(todo.dueDate);
+    setEditTodoPriority(todo.priority);
     setIsEditing(true);
     setCurrentTodo(todo);
     setIsModalOpen(true);
@@ -106,7 +132,11 @@ export const Todo = () => {
       <p className="title">TODO List</p>
       <InputTodo
         todoText={todoText}
-        onChange={(e) => setTodoText(e.target.value)}
+        todoDueDate={todoDueDate}
+        todoPriority={todoPriority}
+        onChangeText={(e) => setTodoText(e.target.value)}
+        onChangeDueDate={(e) => setTodoDueDate(e.target.value)}
+        onChangePriority={(e) => setTodoPriority(e.target.value)}
         onClick={isEditing ? updateTodo : addTodo}
         disabled={isMaxLimitIncompleteTodos}
         isEditing={isEditing}
@@ -131,8 +161,12 @@ export const Todo = () => {
       </div>
       <EditTodoModal
         isOpen={isModalOpen}
-        todoText={editTodoText} // 編集用のTODOテキストを渡す
-        onChange={(e) => setEditTodoText(e.target.value)} // 編集用のTODOテキストを更新する関数を渡す
+        todoText={editTodoText}
+        todoDueDate={editTodoDueDate}
+        todoPriority={editTodoPriority}
+        onChangeText={(e) => setEditTodoText(e.target.value)}
+        onChangeDueDate={(e) => setEditTodoDueDate(e.target.value)}
+        onChangePriority={(e) => setEditTodoPriority(e.target.value)}
         onSave={updateTodo}
         onClose={() => setIsModalOpen(false)}
       />
