@@ -15,10 +15,14 @@ export const Todo = () => {
    * DBレコード取得
    */
   const fetchTodos = async () => {
-    const response = await axios.get("http://localhost:8000/todos");
-    const todos = response.data;
-    setIncompleteTodos(todos.filter((todo) => !todo.completed));
-    setCompleteTodos(todos.filter((todo) => todo.completed));
+    try {
+      const response = await axios.get("http://localhost:8000/todos");
+      const todos = response.data;
+      setIncompleteTodos(todos.filter((todo) => !todo.completed));
+      setCompleteTodos(todos.filter((todo) => todo.completed));
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+    }
   };
 
   /**
@@ -29,63 +33,71 @@ export const Todo = () => {
   }, []);
 
   /**
-   * TODOテキスト変更時処理
-   */
-  const onChangeTodoText = (event) => {
-    setTodoText(event.target.value);
-  };
-
-  /**
    * 追加ボタン押下処理
    */
-  const onClickAdd = async () => {
+  const addTodo = async () => {
     if (!todoText.trim()) return;
     const newTodo = { text: todoText, completed: false };
-    await axios.post("http://localhost:8000/todos", newTodo);
-    setTodoText("");
-    fetchTodos();
+    try {
+      await axios.post("http://localhost:8000/todos", newTodo);
+      setTodoText("");
+      fetchTodos();
+    } catch (error) {
+      console.error("Error adding todo:", error);
+    }
   };
 
   /**
    * 完了ボタン押下処理
    */
-  const onClickComplete = async (index) => {
+  const completeTodo = async (index) => {
     const todo = incompleteTodos[index];
-    await axios.patch(`http://localhost:8000/todos/${todo.id}`, {
-      completed: true,
-    });
-    fetchTodos();
+    const updatedTodo = { ...todo, completed: true };
+    try {
+      await axios.put(`http://localhost:8000/todos/${todo.id}`, updatedTodo);
+      fetchTodos();
+    } catch (error) {
+      console.error("Error completing todo:", error);
+    }
   };
 
   /**
    * 削除ボタン押下処理
    */
-  const onClickRemove = async (index) => {
-    const todo = incompleteTodos[index];
-    await axios.delete(`http://localhost:8000/todos/${todo.id}`);
-    fetchTodos();
+  const removeTodo = async (index, completed = false) => {
+    const todo = completed ? completeTodos[index] : incompleteTodos[index];
+    try {
+      await axios.delete(`http://localhost:8000/todos/${todo.id}`);
+      fetchTodos();
+    } catch (error) {
+      console.error("Error deleting todo:", error);
+    }
   };
 
   /**
    * 戻すボタン押下処理
    */
-  const onClickBack = async (index) => {
+  const backToIncomplete = async (index) => {
     const todo = completeTodos[index];
-    await axios.patch(`http://localhost:8000/todos/${todo.id}`, {
-      completed: false,
-    });
-    fetchTodos();
+    const updatedTodo = { ...todo, completed: false };
+    try {
+      await axios.put(`http://localhost:8000/todos/${todo.id}`, updatedTodo);
+      fetchTodos();
+    } catch (error) {
+      console.error("Error moving todo back to incomplete:", error);
+    }
   };
 
   /** TODO最大表示件数オーバー判定 */
   const isMaxLimitIncompleteTodos = incompleteTodos.length >= 5;
 
   return (
-    <>
+    <div className="todo-container">
+      <p className="title">TODO List</p>
       <InputTodo
         todoText={todoText}
-        onChange={onChangeTodoText}
-        onClick={onClickAdd}
+        onChange={(e) => setTodoText(e.target.value)}
+        onClick={addTodo}
         disabled={isMaxLimitIncompleteTodos}
       />
       {isMaxLimitIncompleteTodos && (
@@ -93,12 +105,17 @@ export const Todo = () => {
           最大登録数は5件です。TODOを消化してください。
         </p>
       )}
-      <IncompleteTodos
-        todos={incompleteTodos}
-        onClickComplete={onClickComplete}
-        onClickRemove={onClickRemove}
-      />
-      <CompleteTodos todos={completeTodos} onClick={onClickBack} />
-    </>
+      <div className="todo-list">
+        <IncompleteTodos
+          todos={incompleteTodos}
+          onClickComplete={completeTodo}
+          onClickRemove={(index) => removeTodo(index, false)}
+        />
+        <CompleteTodos
+          todos={completeTodos}
+          onClick={(index) => backToIncomplete(index)}
+        />
+      </div>
+    </div>
   );
 };

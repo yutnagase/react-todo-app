@@ -1,21 +1,23 @@
 /**
  * 未完了TODOコンポーネント
  */
-export const IncompleteTodos = ({ todos, onClickComplete, onClickRemove }) => {
-  return (
-    <div className="incomplete-area">
-      <p className="title">未完了のTODO</p>
-      <ul id="incomplete-list">
-        {todos.map((todo, index) => (
-          <li key={index}>
-            <div className="list-row">
-              <p className="todo-item">{todo.text}</p>
-              <button onClick={() => onClickComplete(index)}>完了</button>
-              <button onClick={() => onClickRemove(index)}>削除</button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+const IncompleteTodos = ({ todos, onClickComplete, onClickRemove }) => (
+  <div className="todo-area">
+    <p className="title">未完了のTODO</p>
+    <ul>
+      {todos.map((todo, index) => (
+        <li key={todo.id} className="todo-item">
+          <p>{todo.text}</p>
+          <button className="complete" onClick={() => onClickComplete(index)}>
+            完了
+          </button>
+          <button className="remove" onClick={() => onClickRemove(index)}>
+            削除
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+export { IncompleteTodos };

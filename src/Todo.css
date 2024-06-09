@@ -1,61 +1,144 @@
-body {
-  font-family: sans-serif;
-  color: #666;
+/* Reset some basic styles for consistency across browsers */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
 }
 
-input {
-  border-radius: 8px;
-  border: none;
-  padding: 6px 16px;
+body {
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 16px;
+}
+
+input,
+button {
+  outline: none;
 }
 
 button {
-  border-radius: 8px;
-  border: none;
-  padding: 4px 16px;
-  margin: 0px 2px;
-}
-
-button:hover {
-  background-color: #79a8a9;
-  color: #fff;
   cursor: pointer;
 }
 
-.incomplete-area {
-  border: 2px solid #aacfd0;
-  width: 400px;
-  min-height: 200px;
-  padding: 8px;
-  margin: 8px;
-  border-radius: 8px;
+/* Container for the app */
+.todo-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.complete-area {
-  border: 2px solid #aacfd0;
-  width: 400px;
-  min-height: 200px;
-  padding: 8px;
-  margin: 8px;
-  border-radius: 8px;
-  background-color: #c9dede;
-}
-
+/* Header styles */
 .title {
   text-align: center;
-  margin-top: 0px;
+  font-size: 1.5em;
   font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.list-row {
+/* Input area styling */
+.input-area {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: #e9e9e9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1em;
+  border: none;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.input-area button {
+  padding: 10px 20px;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+/* Incomplete and complete areas */
+.todo-list {
+  margin-bottom: 20px;
+}
+
+.todo-area {
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.todo-area ul {
+  list-style: none;
 }
 
 .todo-item {
-  margin: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 5px 0;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-li {
-  list-style: none;
+.todo-item p {
+  flex: 1;
+  margin: 0;
+  font-size: 1em;
+}
+
+.todo-item button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.todo-item button.remove {
+  background-color: #ff3b30;
+}
+
+.todo-item button.complete {
+  background-color: #34c759;
+}
+
+/* Complete area styling */
+.complete-area {
+  background-color: #e0ffe0;
+}
+
+.complete-area .todo-item {
+  background-color: #d4ffd4;
+}
+
+.complete-area button {
+  background-color: #ffcc00;
 }
