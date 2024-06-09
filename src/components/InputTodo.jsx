@@ -1,3 +1,6 @@
+/**
+ * TODO入力コンポーネント独自スタイル
+ */
 const style = {
   backgroundColor: "#c6e5d9",
   width: "400px",
@@ -7,23 +10,22 @@ const style = {
   borderRadius: "8px",
 };
 
-export const InputTodo = (props) => {
-  const { todoText, onChange, onClick, disabled } = props;
-
+/**
+ * TODO入力コンポーネント
+ */
+export const InputTodo = ({ todoText, onChange, onClick, disabled }) => {
   return (
-    <>
-      <div style={style}>
-        <input
-          id="add-text"
-          placeholder="TODOを入力"
-          value={todoText}
-          onChange={onChange}
-          disabled={disabled}
-        />
-        <button id="add-button" onClick={onClick} disabled={disabled}>
-          追加
-        </button>
-      </div>
-    </>
+    <div style={style}>
+      <input
+        id="add-text"
+        placeholder="TODOを入力"
+        value={todoText}
+        onChange={onChange}
+        disabled={disabled}
+      />
+      <button id="add-button" onClick={onClick} disabled={disabled}>
+        追加
+      </button>
+    </div>
   );
 };
