@@ -14,6 +14,8 @@ This is a simple TODO application built with React and JSON Server for managing 
 
 ## Features
 
+![alt text](demo.png)
+
 - Add new TODO items
 - Mark TODO items as complete
 - Delete TODO items
