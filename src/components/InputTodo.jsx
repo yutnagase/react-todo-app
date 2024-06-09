@@ -1,3 +1,5 @@
+import React from "react";
+
 const InputTodo = ({
   todoText,
   todoDueDate,
@@ -11,6 +13,7 @@ const InputTodo = ({
 }) => (
   <div className="input-area">
     <input
+      type="text"
       placeholder="TODOを入力"
       value={todoText}
       onChange={onChangeText}

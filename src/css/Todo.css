@@ -1,148 +1,106 @@
-/* Reset some basic styles for consistency across browsers */
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ul,
-li {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-}
-
-body {
-  background-color: #f5f5f5;
-  color: #333;
-  font-size: 16px;
-}
-
-input,
-button {
-  outline: none;
-}
-
-button {
-  cursor: pointer;
-}
-
-/* Container for the app */
 .todo-container {
   max-width: 600px;
-  margin: 50px auto;
+  margin: 0 auto;
   padding: 20px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Header styles */
 .title {
-  text-align: center;
-  font-size: 1.5em;
-  font-weight: bold;
+  font-size: 24px;
   margin-bottom: 20px;
+  text-align: center;
   color: #333;
 }
 
-/* Input area styling */
 .input-area {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 10px;
-  background: #e9e9e9;
-  border-radius: 8px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-.input-area input {
-  flex: 1;
-  padding: 10px;
-  font-size: 1em;
-  border: none;
-  border-radius: 4px;
+.input-area input[type="text"],
+.input-area input[type="date"],
+.input-area select {
+  flex: 1 1 30%;
   margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
 }
 
 .input-area button {
   padding: 10px 20px;
-  background-color: #007aff;
+  background: #007aff;
   color: white;
   border: none;
   border-radius: 4px;
-  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 16px;
 }
 
-/* Incomplete and complete areas */
+.input-area button:hover {
+  background: #005bb5;
+}
+
 .todo-list {
-  margin-bottom: 20px;
-}
-
-.todo-area {
-  padding: 10px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.todo-area ul {
-  list-style: none;
+  margin-top: 20px;
 }
 
 .todo-item {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: 10px;
-  margin: 5px 0;
-  background: #fff;
+  background: white;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  font-size: 16px;
 }
 
 .todo-item p {
-  flex: 1;
   margin: 0;
-  font-size: 1em;
+  flex: 1;
 }
 
 .todo-item button {
   margin-left: 10px;
   padding: 5px 10px;
-  font-size: 0.9em;
-  background-color: #007aff;
-  color: white;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.todo-item button.remove {
-  background-color: #ff3b30;
+.todo-item .edit {
+  background: #ffa500;
+  color: white;
 }
 
-.todo-item button.complete {
-  background-color: #34c759;
+.todo-item .edit:hover {
+  background: #cc8400;
 }
 
-.todo-item button.edit {
-  background-color: #ff9500;
+.todo-item .complete {
+  background: #28a745;
+  color: white;
 }
 
-/* Complete area styling */
-.complete-area {
-  background-color: #e0ffe0;
+.todo-item .complete:hover {
+  background: #218838;
 }
 
-.complete-area .todo-item {
-  background-color: #d4ffd4;
+.todo-item .remove {
+  background: #dc3545;
+  color: white;
 }
 
-.complete-area button {
-  background-color: #ffcc00;
+.todo-item .remove:hover {
+  background: #c82333;
 }

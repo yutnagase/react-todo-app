@@ -2,16 +2,16 @@
   "todos": [
     {
       "id": "4178",
-      "text": "テスト１",
-      "completed": true,
+      "text": "サンプル１",
+      "completed": false,
       "dueDate": "2024-06-10",
       "priority": "高"
     },
     {
-      "id": "996d",
-      "text": "a",
+      "id": "afda",
+      "text": "サンプル２",
       "completed": false,
-      "dueDate": "2024-06-09",
+      "dueDate": "2024-07-01",
       "priority": "中"
     }
   ]

@@ -1,4 +1,6 @@
 import "../css/EditTodoModal.css";
+import React from "react";
+
 const EditTodoModal = ({
   isOpen,
   todoText,
