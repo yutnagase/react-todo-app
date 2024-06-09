@@ -16,10 +16,10 @@ This is a simple TODO application built with React and JSON Server for managing 
 
 ![alt text](demo.png)
 
-- Add new TODO items
-- Mark TODO items as complete
-- Delete TODO items
-- Move completed TODO items back to incomplete
+- Add Tasks: You can add new tasks.
+- Edit Tasks: You can edit existing tasks.
+- Delete Tasks: You can delete tasks.
+- Toggle Task Completion: You can toggle tasks between completed and incomplete.
 - Fetch and store TODO items using JSON Server
 
 ## Installation
